@@ -1,0 +1,26 @@
+server:
+  port: 9192
+
+spring:
+  datasource:
+    username: Artem
+    password: 1234
+    url: jdbc:postgresql://localhost:5432/shoreLine_hotel_db
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      auto-commit: false
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      format_sql: true
+    open-in-view: false
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+      file-size-threshold: 1MB
+  security:
+    jwt:
+      expirationTime: 3600000
+      secret: 36763979244226452948404D635166546A576D5A7134743777217A25432A462D
