@@ -3,7 +3,7 @@ package com.study.shorelinehotel.controller;
 
 import com.study.shorelinehotel.exception.InvalidBookingRequestException;
 import com.study.shorelinehotel.exception.ResourceNotFoundException;
-import com.study.shorelinehotel.model.BookedRoom;
+import com.study.shorelinehotel.model.Booking;
 import com.study.shorelinehotel.model.Room;
 import com.study.shorelinehotel.response.BookingResponse;
 import com.study.shorelinehotel.response.RoomResponse;
@@ -28,9 +28,9 @@ public class BookingController {
     @GetMapping("/all-bookings")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<BookingResponse>> getAllBookings() {
-        List<BookedRoom> bookings = bookingService.getAllBookings();
+        List<Booking> bookings = bookingService.getAllBookings();
         List<BookingResponse> bookingResponses = new ArrayList<>();
-        for (BookedRoom bookedRoom : bookings) {
+        for (Booking bookedRoom : bookings) {
             BookingResponse bookingResponse = getBookingResponse(bookedRoom);
             bookingResponses.add(bookingResponse);
         }
@@ -39,9 +39,9 @@ public class BookingController {
 
     @GetMapping("/all-bookings/{email}")
     public ResponseEntity<List<BookingResponse>> getBookingsByUserEmail(@PathVariable String email) {
-        List<BookedRoom> bookings = bookingService.getBookingsByUserEmail(email);
+        List<Booking> bookings = bookingService.getBookingsByUserEmail(email);
         List<BookingResponse> bookingResponses = new ArrayList<>();
-        for (BookedRoom bookedRoom : bookings) {
+        for (Booking bookedRoom : bookings) {
             BookingResponse bookingResponse = getBookingResponse(bookedRoom);
             bookingResponses.add(bookingResponse);
         }
@@ -51,7 +51,7 @@ public class BookingController {
     @GetMapping("/confirmation/{confirmationCode}")
     public ResponseEntity<?> getBookingByConfirmationCode(@PathVariable String confirmationCode) {
         try {
-            BookedRoom booking = bookingService.findByBookingConfirmationCode(confirmationCode);
+            Booking booking = bookingService.findByBookingConfirmationCode(confirmationCode);
             BookingResponse bookingResponse = getBookingResponse(booking);
             return ResponseEntity.ok(bookingResponse);
         }catch (ResourceNotFoundException e){
@@ -61,7 +61,7 @@ public class BookingController {
 
     @PostMapping("/room/booking/{roomId}")
     public ResponseEntity<?> saveBooking(@PathVariable Long roomId,
-                                         @RequestBody BookedRoom bookingRequest){
+                                         @RequestBody Booking bookingRequest){
         try {
             String confirmationCode = bookingService.saveBooking(roomId, bookingRequest);
             return ResponseEntity.ok("Room booked successfully! Your booking confirmation code is:" + confirmationCode);
@@ -75,7 +75,7 @@ public class BookingController {
         bookingService.cancelBooking(bookingId);
     }
 
-    private BookingResponse getBookingResponse(BookedRoom booking) {
+    private BookingResponse getBookingResponse(Booking booking) {
         Room theRoom = roomService.getRoomById(booking.getRoom().getId()).get();
         RoomResponse roomResponse = new RoomResponse(
                 theRoom.getId(),

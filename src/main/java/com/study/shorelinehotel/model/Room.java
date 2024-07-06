@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.hibernate.annotations.Type;
-import org.hibernate.usertype.UserType;
 
 import java.math.BigDecimal;
 import java.sql.Blob;
@@ -30,13 +28,13 @@ public class Room {
     private Blob photo;
 
     @OneToMany(mappedBy = "room", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<BookedRoom> bookings;
+    private List<Booking> bookings;
 
     public Room() {
         this.bookings = new ArrayList<>();
     }
 
-    public void addBooking(BookedRoom booking) {
+    public void addBooking(Booking booking) {
         if (bookings == null){
             bookings = new ArrayList<>();
         }

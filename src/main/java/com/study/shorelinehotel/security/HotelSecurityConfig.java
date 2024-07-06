@@ -3,6 +3,7 @@ package com.study.shorelinehotel.security;
 import com.study.shorelinehotel.security.jwt.AuthTokenFilter;
 import com.study.shorelinehotel.security.jwt.JwtAuthEntryPoint;
 import com.study.shorelinehotel.security.user.HotelUserDetailsService;
+import jakarta.servlet.annotation.MultipartConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

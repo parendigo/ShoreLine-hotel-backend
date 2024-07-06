@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookedRoom {
+public class Booking {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
@@ -40,7 +40,7 @@ public class BookedRoom {
     @JoinColumn(name = "room_id")
     private Room room;
 
-    public BookedRoom(String bookingConfirmation) {
+    public Booking(String bookingConfirmation) {
         this.bookingConfirmation = bookingConfirmation;
     }
 

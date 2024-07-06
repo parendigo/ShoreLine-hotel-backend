@@ -1,11 +1,12 @@
 package com.study.shorelinehotel.controller;
 
 import com.study.shorelinehotel.exception.ResourceNotFoundException;
-import com.study.shorelinehotel.model.BookedRoom;
+import com.study.shorelinehotel.model.Booking;
 import com.study.shorelinehotel.model.Room;
 import com.study.shorelinehotel.response.RoomResponse;
 import com.study.shorelinehotel.service.BookingService;
 import com.study.shorelinehotel.service.IRoomService;
+import jakarta.servlet.annotation.MultipartConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,7 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/rooms")
+@MultipartConfig
 public class RoomController {
     private final IRoomService roomService;
     private final BookingService bookingService;
@@ -113,7 +115,7 @@ public class RoomController {
     }
 
     private RoomResponse getRoomResponse(Room room) {
-        List<BookedRoom> bookings = getAllBookingsByRoomId(room.getId());
+        List<Booking> bookings = getAllBookingsByRoomId(room.getId());
 //        List<BookingResponse> bookingResponses = bookings
 //                .stream().map(booking -> new BookingResponse(booking.getBookingId(),
 //                        booking.getCheckInDate(),
@@ -135,7 +137,7 @@ public class RoomController {
                 room.isBooked(), photoBytes);
     }
 
-    private List<BookedRoom> getAllBookingsByRoomId(Long roomId) {
+    private List<Booking> getAllBookingsByRoomId(Long roomId) {
         return bookingService.getAllBookingsByRoomId(roomId);
     }
 }
