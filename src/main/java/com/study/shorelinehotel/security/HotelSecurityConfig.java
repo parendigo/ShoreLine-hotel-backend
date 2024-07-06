@@ -1,6 +1,5 @@
 package com.study.shorelinehotel.security;
 
-
 import com.study.shorelinehotel.security.jwt.AuthTokenFilter;
 import com.study.shorelinehotel.security.jwt.JwtAuthEntryPoint;
 import com.study.shorelinehotel.security.user.HotelUserDetailsService;
@@ -50,7 +49,7 @@ public class HotelSecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "rooms/**").permitAll()
+                        .requestMatchers("/auth/**", "rooms/**", "bookings/**").permitAll()
                         .requestMatchers("/api/roles/**").hasRole("ADMIN").anyRequest().authenticated());
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);

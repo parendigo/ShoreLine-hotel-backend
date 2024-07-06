@@ -38,7 +38,6 @@ public class BookingController {
     }
 
     @GetMapping("/all-bookings/{email}")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<BookingResponse>> getBookingsByUserEmail(@PathVariable String email) {
         List<BookedRoom> bookings = bookingService.getBookingsByUserEmail(email);
         List<BookingResponse> bookingResponses = new ArrayList<>();

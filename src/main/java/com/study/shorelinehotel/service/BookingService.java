@@ -7,6 +7,7 @@ import com.study.shorelinehotel.model.Room;
 import com.study.shorelinehotel.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -57,6 +58,8 @@ public class BookingService implements IBookingService {
 
     @Override
     public void cancelBooking(Long bookingId) {
+        BookedRoom booking = bookingRepository.findById(bookingId).orElseThrow(() -> new ResourceNotFoundException("No booking found with id: " + bookingId));
+        booking.getRoom().getBookings().remove(booking);
         bookingRepository.deleteById(bookingId);
     }
 
