@@ -1,6 +1,5 @@
 package com.study.shorelinehotel.controller;
 
-
 import com.study.shorelinehotel.model.User;
 import com.study.shorelinehotel.service.IUserService;
 import lombok.RequiredArgsConstructor;
@@ -51,22 +50,9 @@ public class UserController {
 //        }
 //    }
 
-//    @DeleteMapping("/delete/{email}")
-//    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') and #email == principal.username")
-//    public ResponseEntity<String> deleteUserByEmail(@PathVariable("email") String email) {
-//        try {
-//            userService.deleteUserByEmail(email);
-//            return ResponseEntity.ok("User deleted successfully");
-//        } catch (UsernameNotFoundException e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-//        }
-//    }
-
-    @DeleteMapping("/delete/{userId}")
+    @DeleteMapping("/delete/{userEmail}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or (hasRole('ROLE_USER') and #email == principal.username)")
-    public ResponseEntity<String> deleteUser(@PathVariable("userId") String email) {
+    public ResponseEntity<String> deleteUser(@PathVariable("userEmail") String email) {
         try {
             userService.deleteUserByEmail(email);
             return ResponseEntity.ok("User deleted successfully");
